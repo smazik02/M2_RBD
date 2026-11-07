@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rbd-secret
+  namespace: default
+type: Opaque
+stringData:
+  superUserPassword: rbd-citus
+  replicationUserPassword: rbd-citus
+---
+apiVersion: kubegres.reactive-tech.io/v1
+kind: Kubegres
+metadata:
+  name: rbd-citus-worker2
+  namespace: default
+spec:
+   replicas: 2
+   image: citusdata/citus:13.2.0-pg16
+   database:
+      size: 25Mi
+      volumeMount: /data
+   env:
+      - name: POSTGRES_DB
+        value: postgres
+      - name: POSTGRES_USER
+        value: postgres
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+           secretKeyRef:
+              name: rbd-secret
+              key: superUserPassword
+      - name: POSTGRES_REPLICATION_PASSWORD
+        valueFrom:
+           secretKeyRef:
+              name: rbd-secret
+              key: replicationUserPassword

@@ -1,0 +1,333 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: organizations_c; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+
+--
+-- Data for Name: organizations_c; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY organizations (or_id, or_name, or_type) FROM stdin;
+151	Organization151	OPERATOR
+219	Organization219	CLIENT
+50	Organization50	CLIENT
+51	Organization51	CLIENT
+52	Organization52	CLIENT
+99	Organization99	CLIENT
+172	Organization172	OPERATOR
+176	Organization176	OPERATOR
+179	Organization179	CLIENT
+60	Organization60	OPERATOR
+89	Organization89	CLIENT
+90	Organization90	OPERATOR
+10	Organization10	CLIENT
+9	Organization9	CLIENT
+13	Organization13	CLIENT
+274	Organization274	CLIENT
+332	Organization332	OPERATOR
+110	Organization110	CLIENT
+4	Organization4	OPERATOR
+333	Organization333	CLIENT
+275	Organization275	CLIENT
+278	Organization278	CLIENT
+23	Organization23	CLIENT
+20	Organization20	OPERATOR
+25	Organization25	CLIENT
+27	Organization27	CLIENT
+28	Organization28	CLIENT
+29	Organization29	CLIENT
+335	Organization335	OPERATOR
+30	Organization30	OPERATOR
+31	Organization31	CLIENT
+5	Organization5	OPERATOR
+96	Organization96	CLIENT
+34	Organization34	CLIENT
+40	Organization40	CLIENT
+7	Organization7	OPERATOR
+42	Organization42	CLIENT
+43	Organization43	OPERATOR
+37	Organization37	CLIENT
+15	Organization15	OPERATOR
+39	Organization39	CLIENT
+36	Organization36	CLIENT
+44	Organization44	OPERATOR
+45	Organization45	CLIENT
+46	Organization46	OPERATOR
+94	Organization94	CLIENT
+87	Organization87	OPERATOR
+49	Organization49	OPERATOR
+80	Organization80	OPERATOR
+63	Organization63	CLIENT
+64	Organization64	CLIENT
+65	Organization65	OPERATOR
+26	Organization26	CLIENT
+70	Organization70	CLIENT
+83	Organization83	OPERATOR
+-1	Organization-1	CLIENT
+22	Organization22	OPERATOR
+72	Organization72	CLIENT
+73	Organization73	CLIENT
+75	Organization75	CLIENT
+76	Organization76	CLIENT
+77	Organization77	CLIENT
+78	Organization78	CLIENT
+79	Organization79	CLIENT
+81	Organization81	CLIENT
+82	Organization82	OPERATOR
+112	Organization112	CLIENT
+103	Organization103	OPERATOR
+33	Organization33	OPERATOR
+106	Organization106	OPERATOR
+24	Organization24	OPERATOR
+98	Organization98	CLIENT
+100	Organization100	CLIENT
+97	Organization97	OPERATOR
+85	Organization85	OPERATOR
+93	Organization93	CLIENT
+101	Organization101	OPERATOR
+102	Organization102	CLIENT
+95	Organization95	CLIENT
+88	Organization88	OPERATOR
+107	Organization107	OPERATOR
+113	Organization113	OPERATOR
+6	Organization6	OPERATOR
+108	Organization108	OPERATOR
+105	Organization105	CLIENT
+117	Organization117	OPERATOR
+104	Organization104	OPERATOR
+115	Organization115	OPERATOR
+114	Organization114	OPERATOR
+56	Organization56	CLIENT
+116	Organization116	OPERATOR
+119	Organization119	OPERATOR
+14	Organization14	OPERATOR
+122	Organization122	OPERATOR
+127	Organization127	OPERATOR
+125	Organization125	OPERATOR
+126	Organization126	CLIENT
+62	Organization62	CLIENT
+124	Organization124	CLIENT
+123	Organization123	CLIENT
+152	Organization152	CLIENT
+129	Organization129	OPERATOR
+154	Organization154	OPERATOR
+38	Organization38	CLIENT
+130	Organization130	OPERATOR
+128	Organization128	OPERATOR
+61	Organization61	CLIENT
+111	Organization111	CLIENT
+208	Organization208	CLIENT
+91	Organization91	OPERATOR
+159	Organization159	CLIENT
+276	Organization276	CLIENT
+279	Organization279	CLIENT
+182	Organization182	CLIENT
+121	Organization121	CLIENT
+180	Organization180	OPERATOR
+184	Organization184	CLIENT
+187	Organization187	CLIENT
+189	Organization189	CLIENT
+192	Organization192	CLIENT
+194	Organization194	CLIENT
+196	Organization196	OPERATOR
+200	Organization200	CLIENT
+21	Organization21	CLIENT
+204	Organization204	CLIENT
+209	Organization209	OPERATOR
+210	Organization210	CLIENT
+211	Organization211	CLIENT
+212	Organization212	OPERATOR
+334	Organization334	OPERATOR
+220	Organization220	OPERATOR
+35	Organization35	CLIENT
+150	Organization150	CLIENT
+131	Organization131	OPERATOR
+132	Organization132	CLIENT
+86	Organization86	OPERATOR
+133	Organization133	OPERATOR
+134	Organization134	CLIENT
+136	Organization136	CLIENT
+280	Organization280	CLIENT
+232	Organization232	OPERATOR
+139	Organization139	CLIENT
+140	Organization140	CLIENT
+141	Organization141	CLIENT
+153	Organization153	OPERATOR
+144	Organization144	OPERATOR
+148	Organization148	CLIENT
+215	Organization215	OPERATOR
+282	Organization282	CLIENT
+147	Organization147	CLIENT
+146	Organization146	CLIENT
+218	Organization218	OPERATOR
+168	Organization168	OPERATOR
+199	Organization199	CLIENT
+206	Organization206	OPERATOR
+201	Organization201	CLIENT
+207	Organization207	CLIENT
+170	Organization170	CLIENT
+221	Organization221	OPERATOR
+171	Organization171	OPERATOR
+142	Organization142	CLIENT
+203	Organization203	CLIENT
+186	Organization186	CLIENT
+188	Organization188	CLIENT
+190	Organization190	CLIENT
+191	Organization191	CLIENT
+193	Organization193	CLIENT
+84	Organization84	OPERATOR
+205	Organization205	CLIENT
+173	Organization173	OPERATOR
+175	Organization175	CLIENT
+195	Organization195	CLIENT
+169	Organization169	CLIENT
+197	Organization197	OPERATOR
+178	Organization178	OPERATOR
+185	Organization185	CLIENT
+202	Organization202	CLIENT
+181	Organization181	OPERATOR
+135	Organization135	CLIENT
+226	Organization226	OPERATOR
+231	Organization231	CLIENT
+183	Organization183	OPERATOR
+223	Organization223	CLIENT
+213	Organization213	CLIENT
+145	Organization145	OPERATOR
+216	Organization216	OPERATOR
+174	Organization174	CLIENT
+234	Organization234	CLIENT
+149	Organization149	CLIENT
+227	Organization227	OPERATOR
+228	Organization228	CLIENT
+229	Organization229	CLIENT
+230	Organization230	CLIENT
+235	Organization235	OPERATOR
+237	Organization237	CLIENT
+155	Organization155	OPERATOR
+236	Organization236	CLIENT
+238	Organization238	OPERATOR
+239	Organization239	CLIENT
+240	Organization240	CLIENT
+214	Organization214	OPERATOR
+233	Organization233	OPERATOR
+143	Organization143	OPERATOR
+137	Organization137	CLIENT
+217	Organization217	CLIENT
+158	Organization158	OPERATOR
+120	Organization120	CLIENT
+138	Organization138	CLIENT
+18	Organization18	CLIENT
+277	Organization277	CLIENT
+281	Organization281	CLIENT
+0	Organization0	OPERATOR
+283	Organization283	OPERATOR
+284	Organization284	OPERATOR
+316	Organization316	CLIENT
+293	Organization293	OPERATOR
+300	Organization300	OPERATOR
+244	Organization244	OPERATOR
+290	Organization290	OPERATOR
+245	Organization245	OPERATOR
+319	Organization319	CLIENT
+17	Organization17	CLIENT
+287	Organization287	CLIENT
+317	Organization317	CLIENT
+301	Organization301	CLIENT
+291	Organization291	CLIENT
+322	Organization322	OPERATOR
+256	Organization256	OPERATOR
+305	Organization305	CLIENT
+306	Organization306	OPERATOR
+254	Organization254	CLIENT
+270	Organization270	OPERATOR
+255	Organization255	CLIENT
+262	Organization262	CLIENT
+272	Organization272	OPERATOR
+273	Organization273	OPERATOR
+257	Organization257	CLIENT
+258	Organization258	OPERATOR
+259	Organization259	CLIENT
+260	Organization260	CLIENT
+249	Organization249	OPERATOR
+241	Organization241	CLIENT
+263	Organization263	OPERATOR
+264	Organization264	OPERATOR
+265	Organization265	OPERATOR
+266	Organization266	CLIENT
+267	Organization267	CLIENT
+55	Organization55	OPERATOR
+288	Organization288	CLIENT
+246	Organization246	CLIENT
+271	Organization271	OPERATOR
+324	Organization324	CLIENT
+302	Organization302	CLIENT
+294	Organization294	OPERATOR
+268	Organization268	OPERATOR
+248	Organization248	CLIENT
+198	Organization198	OPERATOR
+250	Organization250	CLIENT
+251	Organization251	OPERATOR
+261	Organization261	CLIENT
+314	Organization314	OPERATOR
+247	Organization247	OPERATOR
+242	Organization242	CLIENT
+243	Organization243	CLIENT
+253	Organization253	OPERATOR
+286	Organization286	OPERATOR
+315	Organization315	OPERATOR
+309	Organization309	OPERATOR
+310	Organization310	OPERATOR
+297	Organization297	OPERATOR
+19	Organization19	CLIENT
+311	Organization311	OPERATOR
+304	Organization304	CLIENT
+299	Organization299	CLIENT
+292	Organization292	CLIENT
+313	Organization313	OPERATOR
+303	Organization303	CLIENT
+325	Organization325	CLIENT
+312	Organization312	CLIENT
+289	Organization289	CLIENT
+307	Organization307	CLIENT
+308	Organization308	CLIENT
+326	Organization326	CLIENT
+285	Organization285	CLIENT
+252	Organization252	CLIENT
+11	Organization11	OPERATOR
+327	Organization327	CLIENT
+318	Organization318	CLIENT
+269	Organization269	OPERATOR
+320	Organization320	OPERATOR
+323	Organization323	CLIENT
+330	Organization330	OPERATOR
+321	Organization321	OPERATOR
+295	Organization295	CLIENT
+177	Organization177	OPERATOR
+329	Organization329	CLIENT
+328	Organization328	CLIENT
+298	Organization298	OPERATOR
+331	Organization331	OPERATOR
+1	Organization1	OPERATOR
+\.
+
+
+--
+-- PostgreSQL database dump complete
+--
+

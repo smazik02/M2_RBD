@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ora-rbd1
+spec:
+  serviceName: ora-rbd1-service
+  selector:
+    matchLabels:
+      app: ora-rbd1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ora-rbd1
+    spec:
+      containers:
+        - name: ora-rbd1
+          image: container-registry.oracle.com/database/express:latest
+          volumeMounts:
+            - name: ora-rbd1-disk
+              mountPath: /opt/oracle/oradata
+          env:
+            - name: ORACLE_PWD
+              value: rbd1
+  volumeClaimTemplates:
+    - metadata:
+        name: ora-rbd1-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ora-rbd1-lb
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 1521
+    targetPort: 1521
+  selector:
+    app: ora-rbd1

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pgsql-citus-sts
+spec:
+  serviceName: pgsql-rbd-citus
+  selector:
+    matchLabels:
+      app: pgsql-rbd-citus
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: pgsql-rbd-citus
+    spec:
+      containers:
+        - name: pgsql-citus
+          image: citusdata/citus:13.2.0-pg16
+          ports:
+            - containerPort: 5432
+              name: pgsql
+          volumeMounts:
+            - name: pgsql-rbd-citus-disk
+              mountPath: /data
+          env:
+            - name: POSTGRES_PASSWORD
+              value: rbd-citus
+            - name: PGDATA
+              value: /data/pgdata
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+  volumeClaimTemplates:
+    - metadata:
+        name: pgsql-rbd-citus-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 25Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgsql-rbd-citus-lb
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app: pgsql-rbd-citus
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgsql-rbd-citus
+  labels:
+    app: pgsql-rbd-citus
+spec:
+  ports:
+  - port: 5432
+    name: pgsql
+  clusterIP: None
+  selector:
+    app: pgsql-rbd-citus
