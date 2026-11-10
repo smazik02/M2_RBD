@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rbd-cassandra
+  name: rbd-cassandra
+spec:
+  clusterIP: None
+  ports:
+  - port: 9042
+  selector:
+    app: rbd-cassandra
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rbd-cassandra
+  labels:
+    app: rbd-cassandra
+spec:
+  serviceName: rbd-cassandra
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rbd-cassandra
+  template:
+    metadata:
+      labels:
+        app: rbd-cassandra
+    spec:
+      terminationGracePeriodSeconds: 1800
+      containers:
+      - name: rbd-cassandra
+        image: cassandra:4.1.10
+        ports:
+        - containerPort: 7000
+          name: intra-node
+        - containerPort: 7001
+          name: tls-intra-node
+        - containerPort: 7199
+          name: jmx
+        - containerPort: 9042
+          name: cql
+        resources:
+          limits:
+            cpu: "500m"
+            memory: 1536Mi
+          requests:
+            cpu: "500m"
+            memory: 1536Mi
+        securityContext:
+          capabilities:
+            add:
+              - IPC_LOCK
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - "</dev/tcp/127.0.0.1/9042"
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - nodetool drain
+        env:
+          - name: CASSANDRA_NUM_TOKENS
+            value: "2"
+          - name: MAX_HEAP_SIZE
+            value: 512M
+          - name: HEAP_NEWSIZE
+            value: 100M
+          - name: CASSANDRA_SEEDS
+            value: "rbd-cassandra-0.rbd-cassandra.default.svc.cluster.local"
+          - name: CASSANDRA_CLUSTER_NAME
+            value: "RBD"
+          - name: CASSANDRA_DC
+            value: "DC1-RBD"
+          - name: CASSANDRA_RACK
+            value: "Rack1-RBD"
+          - name: CASSANDRA_ENDPOINT_SNITCH
+            value: "GossipingPropertyFileSnitch"
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        volumeMounts:
+        - name: rbd-cassandra-data
+          mountPath: /var/lib/cassandra
+  volumeClaimTemplates:
+  - metadata:
+      name: rbd-cassandra-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
