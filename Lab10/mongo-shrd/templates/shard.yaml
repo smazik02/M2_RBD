@@ -1,0 +1,36 @@
+{{- if eq .Values.clusterRole "shardsvr" }}
+# Zbiór replikacji węzłów fragmentów zarządzany przez operator MCK
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
+metadata:
+  name: {{ .Values.replSetName }}
+spec:
+  members: {{ .Values.replicas }}
+  type: ReplicaSet
+  version: {{ .Values.mongodbVersion | quote }}
+  security:
+    authentication:
+      modes: ["SCRAM"]
+  users:
+    - name: rbd-admin
+      db: admin
+      passwordSecretRef:
+        name: {{ .Values.replSetName }}-admin-password
+      roles:
+        - name: clusterAdmin
+          db: admin
+        - name: userAdminAnyDatabase
+          db: admin
+      scramCredentialsSecretName: {{ .Values.replSetName }}-rbd-admin
+  additionalMongodConfig:
+    sharding.clusterRole: shardsvr
+    net.port: {{ .Values.port }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.replSetName }}-admin-password
+type: Opaque
+stringData:
+  password: {{ .Values.adminPassword | quote }}
+{{- end }}

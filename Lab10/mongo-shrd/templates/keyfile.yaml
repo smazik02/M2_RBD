@@ -1,0 +1,11 @@
+{{- if not .Values.keyfile }}
+{{- fail "Podaj klucz uwierzytelniania klastra: --set-file keyfile=<plik>" }}
+{{- end }}
+apiVersion: v1
+kind: Secret
+metadata:
+  # Nazwa zgodna z konwencją operatora MCK (<nazwa-zasobu>-keyfile)
+  name: {{ .Values.replSetName }}-keyfile
+type: Opaque
+stringData:
+  keyfile: {{ .Values.keyfile | trim | quote }}

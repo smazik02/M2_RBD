@@ -1,0 +1,94 @@
+{{- if ne .Values.clusterRole "shardsvr" }}
+# Węzły konfiguracyjne i rutery zapytań, które nie są obsługiwane przez operator MCK
+# w wersji Community, są wdrażane jako zwykłe StatefulSet
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.replSetName }}-svc
+  labels:
+    name: {{ .Values.replSetName }}
+spec:
+  ports:
+    - port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
+  clusterIP: None
+  selector:
+    role: {{ .Values.replSetName }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.replSetName }}
+spec:
+  selector:
+    matchLabels:
+      role: {{ .Values.replSetName }}
+  serviceName: {{ .Values.replSetName }}-svc
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      labels:
+        role: {{ .Values.replSetName }}
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        runAsNonRoot: true
+      initContainers:
+        # mongod/mongos wymagają, aby plik klucza był dostępny wyłącznie dla właściciela
+        - name: keyfile-permissions
+          image: {{ .Values.image }}:{{ .Values.mongodbVersion }}-ubi8
+          command: ["sh", "-c", "cp /keyfile-secret/keyfile /keyfile/keyfile && chmod 400 /keyfile/keyfile"]
+          volumeMounts:
+            - name: keyfile-secret
+              mountPath: /keyfile-secret
+            - name: keyfile
+              mountPath: /keyfile
+      containers:
+        - name: {{ .Values.replSetName }}
+          image: {{ .Values.image }}:{{ .Values.mongodbVersion }}-ubi8
+          command:
+            {{- if eq .Values.clusterRole "mongos" }}
+            - mongos
+            {{- else }}
+            - mongod
+            {{- end }}
+            - --config
+            - /etc/config/mongod.conf
+          env:
+            - name: HOME
+              value: /tmp
+          ports:
+            - containerPort: {{ .Values.port }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data
+            - name: config-volume
+              mountPath: /etc/config
+            - name: keyfile
+              mountPath: /keyfile
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.replSetName }}-configmap
+        - name: keyfile-secret
+          secret:
+            secretName: {{ .Values.replSetName }}-keyfile
+        - name: keyfile
+          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-persistent-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.storage }}
+{{- end }}

@@ -1,0 +1,21 @@
+# Rola komponentu klastra MongoDB: configsvr, shardsvr lub mongos
+clusterRole: configsvr
+# Nazwa zbioru replikacji, a zarazem nazwa StatefulSet, Service i zasobu MongoDBCommunity
+replSetName: configsvr
+# Liczba węzłów zbioru replikacji (lub liczba ruterów zapytań)
+replicas: 1
+# Port, na którym nasłuchują procesy mongod i mongos
+port: 27017
+# Adresy węzłów konfiguracyjnych wykorzystywane przez rutery zapytań
+configDB: configsvr/configsvr-0.configsvr-svc:27017
+# Wersja MongoDB Community
+mongodbVersion: "9.0.4"
+# Obraz kontenera MongoDB Community (dla węzłów konfiguracyjnych i ruterów zapytań)
+image: quay.io/mongodb/mongodb-community-server
+# Klucz uwierzytelniania wewnętrznego klastra, wspólny dla wszystkich komponentów
+# (należy go podać za pomocą --set-file keyfile=<plik>)
+keyfile: ""
+# Hasło użytkownika administracyjnego rbd-admin w węzłach fragmentów
+adminPassword: rbd-mongo
+# Rozmiar trwałego woluminu węzłów konfiguracyjnych
+storage: 1Gi

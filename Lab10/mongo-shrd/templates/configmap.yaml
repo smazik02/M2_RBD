@@ -1,0 +1,23 @@
+{{- if ne .Values.clusterRole "shardsvr" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.replSetName }}-configmap
+data:
+  mongod.conf: |-
+    net:
+      bindIpAll: true
+      port: {{ .Values.port }}
+    security:
+      keyFile: /keyfile/keyfile
+    sharding:
+{{- if eq .Values.clusterRole "mongos" }}
+      configDB: {{ .Values.configDB }}
+{{- else }}
+      clusterRole: {{ .Values.clusterRole }}
+    replication:
+      replSetName: {{ .Values.replSetName }}
+    storage:
+      dbPath: /data
+{{- end }}
+{{- end }}
